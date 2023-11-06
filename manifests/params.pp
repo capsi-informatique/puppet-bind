@@ -20,6 +20,12 @@ class bind::params {
     }
 
     if $::osfamily == 'Debian' {
+        if versioncmp($::operatingsystemmajrelease,'11') < 0 {
+          $service_restart      = '/etc/init.d/bind9 reload'
+        } else {
+          $service_restart      = '/usr/bin/systemctl reload bind9'
+        }
+
         $package_name         = 'bind9'
         $service_name         = 'bind9'
         $bind_user            = 'bind'
