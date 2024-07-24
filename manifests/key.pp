@@ -11,23 +11,14 @@
 # to Bind9 documentation regarding dynamic update setup and
 # key pair generation.
 #
-define bind::key(
-  $secret,
-  $ensure    = present,
-  $algorithm = 'hmac-md5',
+define bind::key (
+  String                    $secret,
+  Enum['present', 'absent'] $ensure    = 'present',
+  String                    $algorithm = 'hmac-md5',
 ) {
+  include bind::params
 
-  include ::bind::params
-
-  validate_string($ensure)
-  validate_re($ensure, ['present', 'absent'],
-              "\$ensure must be either 'present' or 'absent', got '${ensure}'")
-
-  validate_string($algorithm)
-  validate_string($secret)
-
-
-  file {"${bind::params::keys_directory}/${name}.conf":
+  file { "${bind::params::keys_directory}/${name}.conf":
     ensure  => $ensure,
     mode    => '0600',
     owner   => $bind::params::bind_user,
@@ -36,7 +27,7 @@ define bind::key(
   }
 
   if $ensure == 'present' {
-    concat::fragment {"dnskey.${name}":
+    concat::fragment { "dnskey.${name}":
       target  => "${bind::params::config_base_dir}/${bind::params::named_local_name}",
       content => "include \"${bind::params::keys_directory}/${name}.conf\";\n",
       notify  => Exec['reload bind9'],

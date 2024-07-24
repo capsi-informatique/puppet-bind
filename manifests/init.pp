@@ -48,18 +48,18 @@
 # }
 #
 class bind(
-  $chroot       = false,
-  $default_view = {},
-  $config       = {},
-  $logging      = {},
+  Boolean $chroot       = false,
+  Hash    $default_view = {},
+  Hash    $config       = {},
+  Hash    $logging      = {},
 ) {
   anchor { 'bind::begin': }
-  -> class { '::bind::install': }
-  -> class { '::bind::config': }
-  ~> class { '::bind::service': }
+  -> class { 'bind::install': }
+  -> class { 'bind::config': }
+  ~> class { 'bind::service': }
   -> anchor { 'bind::end': }
 
-  exec {'reload bind9':
+  exec { 'reload bind9':
     command     => $bind::params::service_restart,
     onlyif      => "named-checkconf -jz ${bind::params::config_base_dir}/${bind::params::named_conf_name}",
     refreshonly => true,

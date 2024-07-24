@@ -1,7 +1,8 @@
 class bind::install {
-  include ::bind::params
+  include bind::params
+
   package { 'bind9':
-    ensure => present,
+    ensure => 'present',
     name   => $bind::params::package_name,
   }
 }

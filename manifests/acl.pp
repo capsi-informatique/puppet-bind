@@ -1,12 +1,7 @@
-define bind::acl(
-  $ensure=present,
-  $acls = [],
+define bind::acl (
+  Enum['present', 'absent'] $ensure = 'present',
+  Array[String]             $acls = [],
 ) {
-
-  validate_array($acls)
-  validate_string($ensure)
-  validate_re($ensure, ['^present$', '^absent$'])
-
   $_ensure = $ensure? {
     'present' => 'file',
     default   => 'absent',
@@ -14,7 +9,7 @@ define bind::acl(
 
   $_name = regsubst($name, '\s', '-', 'G')
 
-  file {$name:
+  file { $name:
     ensure  => $_ensure,
     content => template('bind/acl.erb'),
     group   => 'root',
@@ -25,7 +20,7 @@ define bind::acl(
   }
 
   if $ensure == 'present' {
-    concat::fragment {"acl.${_name}":
+    concat::fragment { "acl.${_name}":
       content => "include \"${bind::params::acls_directory}/${_name}\";\n",
       notify  => Exec['reload bind9'],
       target  => "${bind::params::config_base_dir}/acls.conf",

@@ -3,7 +3,7 @@
 #
 module Puppet::Parser::Functions
   newfunction(:bind_check_hostname, :type => :rvalue, :doc => <<-EOS
-Prepare checked string for *is_domain_name()* (from stdlib) by removing /^\*\.?/
+Prepare checked string for *validate_domain_name()* (from stdlib) by removing /^\*\.?/
 if present. *is_domain_name()* doesn't want any wildcard, which makes sense in
 most cases.
 Usage: bind_check_hostname(hostname, type)
@@ -35,7 +35,7 @@ Usage: bind_check_hostname(hostname, type)
     # Nothing left to check, and is_domain_name fails empty
     return true if domain == ''
 
-    return function_is_domain_name([domain])
+    return call_function('stdlib::validate_domain_name', [domain])
   end
 end
 

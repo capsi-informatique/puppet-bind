@@ -1,8 +1,8 @@
 class bind::service {
-  include ::bind::params
+  include bind::params
 
   service { 'bind9':
-    ensure    => running,
+    ensure    => 'running',
     name      => $bind::params::service_name,
     enable    => true,
     restart   => $bind::params::service_restart,

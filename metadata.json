@@ -1,9 +1,9 @@
 {
   "name": "capsi-bind",
-  "version": "2.0.0",
-  "author": "Camptocamp",
+  "version": "3.0.0",
+  "author": "CAPSI Informatique",
   "description": "Bind defined resource types",
-  "summary": "Camptocamp Bind Module",
+  "summary": "Bind Module forked from Camptocamp",
   "license": "Apache-2.0",
   "source": "https://github.com/capsi-informatique/puppet-bind",
   "project_page": "https://github.com/capsi-informatique/puppet-bind",
@@ -20,7 +20,10 @@
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "7",
-        "8"
+        "8",
+        "9",
+        "10",
+        "11"
       ]
     },
     {
@@ -33,11 +36,11 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 3.2.0 < 9.0.0"
+      "version_requirement": ">= 9.0.0 < 10.0.0"
     },
     {
       "name": "puppetlabs/concat",
-      "version_requirement": ">= 1.0.0 < 9.0.0"
+      "version_requirement": ">= 1.0.0 < 10.0.0"
     }
   ]
 }
