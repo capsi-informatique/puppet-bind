@@ -35,7 +35,12 @@ Usage: bind_check_hostname(hostname, type)
     # Nothing left to check, and is_domain_name fails empty
     return true if domain == ''
 
-    return call_function('stdlib::validate_domain_name', [domain])
+    begin
+      call_function('stdlib::validate_domain_name', [domain])
+      return true
+    rescue Puppet::ParseError
+      return false
+    end
   end
 end
 
