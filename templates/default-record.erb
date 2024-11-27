@@ -11,7 +11,7 @@
       end
     end
   else 
-    raise(Puppet::ParseError, "#{datas.fetch('owner')} is NOT a valid IP") unless (scope.function_is_ip_address([datas.fetch('owner')]) or @record_type != 'A' or @record_type != 'AAAA')
+    # raise(Puppet::ParseError, "#{datas.fetch('owner')} is NOT a valid IP") unless (scope.function_is_ip_address([datas.fetch('owner')]) or @record_type != 'A' or @record_type != 'AAAA')
 -%>
 <%= host %> <%= datas.fetch('ttl', '') %> <%=datas.fetch('record_class', 'IN')%> <%= @record_type %> <%= datas.fetch('owner') %>
 <%- 
